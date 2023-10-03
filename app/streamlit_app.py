@@ -1,3 +1,5 @@
+import json
+
 import streamlit as st
 from dotenv import load_dotenv
 from langchain.agents import AgentType, initialize_agent
@@ -5,8 +7,9 @@ from langchain.callbacks import StreamlitCallbackHandler
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts import MessagesPlaceholder
-from langchain.tools import Tool
+from langchain.tools import tool
 from PIL import Image
+from pydantic import BaseModel, Field
 
 load_dotenv()
 
@@ -14,28 +17,15 @@ if "is_light_on" not in st.session_state:
     st.session_state.is_light_on = False
 
 
-def turn_on_light(param):
-    st.session_state.is_light_on = True
-    return "Success"
+class ToggleLightInput(BaseModel):
+    on: bool = Field(description="Whether to turn the light on or off")
 
 
-def turn_off_light(param):
-    st.session_state.is_light_on = False
-    return "Success"
-
-
-tools = [
-    Tool.from_function(
-        func=turn_on_light,
-        name="turn_on_light",
-        description="Turn on the light",
-    ),
-    Tool.from_function(
-        func=turn_off_light,
-        name="turn_off_light",
-        description="Turn off the light",
-    ),
-]
+@tool
+def toggle_light(on):
+    """toggle the light on or off"""
+    st.session_state.is_light_on = on
+    return json.dumps({"is_light_on": on})
 
 
 def create_agent_chain():
@@ -45,6 +35,8 @@ def create_agent_chain():
         "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
     }
     memory = ConversationBufferMemory(memory_key="memory", return_messages=True)
+
+    tools = [toggle_light]
 
     return initialize_agent(
         tools,
@@ -59,7 +51,7 @@ if "agent_chain" not in st.session_state:
     st.session_state.agent_chain = create_agent_chain()
 
 
-st.title("langchain-streamlit-app")
+st.title("My AI Assistant")
 
 for message in st.session_state.agent_chain.memory.chat_memory.messages:
     if message.type == "human":
@@ -68,7 +60,7 @@ for message in st.session_state.agent_chain.memory.chat_memory.messages:
         role = "assistant"
 
     with st.chat_message(role):
-        st.markdown(message["content"])
+        st.markdown(message.content)
 
 prompt = st.chat_input("What is up?")
 
