@@ -5,8 +5,37 @@ from langchain.callbacks import StreamlitCallbackHandler
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts import MessagesPlaceholder
+from langchain.tools import Tool
+from PIL import Image
 
 load_dotenv()
+
+if "is_light_on" not in st.session_state:
+    st.session_state.is_light_on = False
+
+
+def turn_on_light(param):
+    st.session_state.is_light_on = True
+    return "Success"
+
+
+def turn_off_light(param):
+    st.session_state.is_light_on = False
+    return "Success"
+
+
+tools = [
+    Tool.from_function(
+        func=turn_on_light,
+        name="turn_on_light",
+        description="Turn on the light",
+    ),
+    Tool.from_function(
+        func=turn_off_light,
+        name="turn_off_light",
+        description="Turn off the light",
+    ),
+]
 
 
 def create_agent_chain():
@@ -17,7 +46,6 @@ def create_agent_chain():
     }
     memory = ConversationBufferMemory(memory_key="memory", return_messages=True)
 
-    tools = load_tools(["terminal"])
     return initialize_agent(
         tools,
         chat,
@@ -31,10 +59,11 @@ if "agent_chain" not in st.session_state:
     st.session_state.agent_chain = create_agent_chain()
 
 
-st.title("langchain-streamlit-app")
-
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
+st.title("langchain-streamlit-app")
+
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -54,3 +83,12 @@ if prompt:
         st.markdown(response)
 
     st.session_state.messages.append({"role": "assistant", "content": response})
+
+with st.sidebar:
+    if st.session_state.is_light_on:
+        image = "light-room.jpeg"
+    else:
+        image = "dark-room.jpeg"
+
+    print(image)
+    st.image(Image.open(f"assets/{image}"))
