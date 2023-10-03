@@ -1,0 +1,82 @@
+<mxfile host="65bd71144e">
+    <diagram id="3Bed3kRDpc-w-_dJpMLZ" name="Page-1">
+        <mxGraphModel dx="1314" dy="773" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;電気・扇風機操作機&lt;/span&gt;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;（ラズパイ）&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="160" y="560" width="320" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="AIアシスタント&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Webアプリ&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-align: start;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%E5%8F%82%E5%8A%A0%E8%80%85%22%20style%3D%22shape%3DumlActor%3BverticalLabelPosition%3Dbottom%3BverticalAlign%3Dtop%3Bhtml%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%2280%22%20y%3D%22235%22%20width%3D%2230%22%20height%3D%2260%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3CmxCell%20id%3D%223%22%20value%3D%22%22%20style%3D%22endArrow%3Dnone%3BendFill%3D0%3BendSize%3D24%3Bhtml%3D1%3B%22%20edge%3D%221%22%20source%3D%222%22%20target%3D%224%22%20parent%3D%221%22%3E%3CmxGeometry%20width%3D%22160%22%20relative%3D%221%22%20as%3D%22geometry%22%3E%3CmxPoint%20x%3D%22330%22%20y%3D%22330%22%20as%3D%22sourcePoint%22%2F%3E%3CmxPoint%20x%3D%22240%22%20y%3D%22265%22%20as%3D%22targetPoint%22%2F%3E%3C%2FmxGeometry%3E%3C%2FmxCell%3E%3CmxCell%20id%3D%224%22%20value%3D%22AI%E3%82%A2%E3%82%B7%E3%82%B9%E3%82%BF%E3%83%B3%E3%83%88%26lt%3Bbr%26gt%3BWeb%E3%82%A2%E3%83%97%E3%83%AA%22%20style%3D%22ellipse%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22240%22%20y%3D%22225%22%20width%3D%22120%22%20height%3D%2280%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="160" y="40" width="520" height="480" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="参加者" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="235" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="" style="endArrow=none;endFill=0;endSize=24;html=1;" edge="1" parent="1" source="5" target="7">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="330" y="330" as="sourcePoint"/>
+                        <mxPoint x="240" y="265" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="キーボード入力" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="200" y="225" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="今日の天気を教えて" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="180" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="電気&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;扇風機&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;の状態確認" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="200" y="360" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="会議の予定を&lt;br&gt;登録して" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="300" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="電気&lt;br&gt;扇風機&lt;br&gt;の状態確認" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="200" y="640" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="" style="endArrow=none;endFill=0;endSize=24;html=1;" edge="1" parent="1" source="5" target="14">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="120" y="287.27272727272725" as="sourcePoint"/>
+                        <mxPoint x="232.09962293026638" y="378.9906005793089" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="電気つけて&lt;br&gt;扇風機つけて" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="400" y="400" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="雑談" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="400" y="120" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;" edge="1" parent="1" source="17" target="7">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="470" y="260" as="sourcePoint"/>
+                        <mxPoint x="630" y="260" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="20" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;" edge="1" parent="1" source="8" target="7">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="487.7686539877427" y="128.41371667184148" as="sourcePoint"/>
+                        <mxPoint x="312.2229264019138" y="246.58072261409666" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="21" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;" edge="1" parent="1" source="10" target="7">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="436.4639911713284" y="218.0603403277447" as="sourcePoint"/>
+                        <mxPoint x="323.42061306169376" y="256.7884273653316" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="22" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;" edge="1" parent="1" source="16" target="7">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="460.66381882790233" y="294.0663818827902" as="sourcePoint"/>
+                        <mxPoint x="329.33618117209767" y="280.9336181172098" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="23" value="" style="endArrow=none;endFill=0;endSize=24;html=1;" edge="1" parent="1" source="5" target="9">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="118.20000000000005" y="305" as="sourcePoint"/>
+                        <mxPoint x="253.11158592295965" y="611.6172407339991" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
