@@ -1,6 +1,6 @@
 import streamlit as st
 from dotenv import load_dotenv
-from langchain.agents import AgentType, initialize_agent, load_tools
+from langchain.agents import AgentType, initialize_agent
 from langchain.callbacks import StreamlitCallbackHandler
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
@@ -59,21 +59,20 @@ if "agent_chain" not in st.session_state:
     st.session_state.agent_chain = create_agent_chain()
 
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
 st.title("langchain-streamlit-app")
 
+for message in st.session_state.agent_chain.memory.chat_memory.messages:
+    if message.type == "human":
+        role = "user"
+    else:
+        role = "assistant"
 
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
+    with st.chat_message(role):
         st.markdown(message["content"])
 
 prompt = st.chat_input("What is up?")
 
 if prompt:
-    st.session_state.messages.append({"role": "user", "content": prompt})
-
     with st.chat_message("user"):
         st.markdown(prompt)
 
@@ -82,13 +81,10 @@ if prompt:
         response = st.session_state.agent_chain.run(prompt, callbacks=[callback])
         st.markdown(response)
 
-    st.session_state.messages.append({"role": "assistant", "content": response})
-
 with st.sidebar:
     if st.session_state.is_light_on:
         image = "light-room.jpeg"
     else:
         image = "dark-room.jpeg"
 
-    print(image)
     st.image(Image.open(f"assets/{image}"))
