@@ -3,7 +3,7 @@ dev:
 	poetry run uvicorn app.main:app --reload
 
 .PHONY: build
-build: requirements.txt
+build:
 	docker compose build
 
 requirements.txt: pyproject.toml
