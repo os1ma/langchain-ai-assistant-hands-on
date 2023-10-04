@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "langchain-ai-assistant-hands-on-cloudserver"
+version = "0.1.0"
+description = ""
+authors = ["Yuki Oshima <39944763+os1ma@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.103.2"
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
