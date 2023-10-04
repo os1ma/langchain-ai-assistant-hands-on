@@ -12,11 +12,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-room_id = sys.argv[1]
-logger.info("Room id = %s", room_id)
-
-server_host = sys.argv[2]
+server_host = sys.argv[1]
 logger.info("Server host = %s", server_host)
+
+room_id = sys.argv[2]
+logger.info("Room id = %s", room_id)
 
 req = urllib.request.Request(
     f"http://{server_host}/rooms/{room_id}/register",
