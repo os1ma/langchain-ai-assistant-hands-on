@@ -1,8 +1,8 @@
 import json
 import logging
 import urllib.request
+import sys
 
-ROOM_ID = "myroom"
 SERVER_URL_BASE = "http://localhost:8000"
 
 logging.basicConfig(
@@ -10,17 +10,20 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+room_id = sys.argv[1]
+logger.info("Room id = %s", room_id)
+
 req = urllib.request.Request(
-    f"{SERVER_URL_BASE}/rooms/{ROOM_ID}/register",
+    f"{SERVER_URL_BASE}/rooms/{room_id}/register",
     method="POST",
     headers={"Content-Type": "application/json"},
 )
 with urllib.request.urlopen(req) as res:
-    logger.info("Room registered. id = %s", ROOM_ID)
+    logger.info("Room registered. id = %s", room_id)
 
 
 while True:
-    req = urllib.request.Request(f"{SERVER_URL_BASE}/rooms/{ROOM_ID}/poll")
+    req = urllib.request.Request(f"{SERVER_URL_BASE}/rooms/{room_id}/poll")
     with urllib.request.urlopen(req) as res:
         res_body = res.read().decode("utf-8")
         room = json.loads(res_body)
