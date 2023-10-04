@@ -1,9 +1,12 @@
 import json
 import logging
-import urllib.request
 import sys
+import urllib.request
+
+import RPi.GPIO as GPIO
 
 SERVER_URL_BASE = "http://localhost:8000"
+GPIO_PIN = 4
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -32,3 +35,10 @@ while True:
             room["id"],
             room["is_light_on"],
         )
+
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(GPIO_PIN, GPIO.OUT)
+        if room["is_light_on"]:
+            GPIO.output(GPIO_PIN, GPIO.HIGH)
+        else:
+            GPIO.output(GPIO_PIN, GPIO.LOW)
