@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-from room import Room, RoomDatabase
+from app.room import Room, RoomDatabase
 
 room_database = RoomDatabase()
 

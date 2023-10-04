@@ -1,3 +1,10 @@
 .PHONY: dev
 dev:
-	poetry run uvicorn main:app --reload
+	poetry run uvicorn app.main:app --reload
+
+.PHONY: build
+build: requirements.txt
+	docker compose build
+
+requirements.txt: pyproject.toml
+	poetry export -f requirements.txt --output requirements.txt
