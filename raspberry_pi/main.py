@@ -5,7 +5,6 @@ import urllib.request
 
 import RPi.GPIO as GPIO
 
-SERVER_URL_BASE = "http://localhost:8000"
 GPIO_PIN = 4
 
 logging.basicConfig(
@@ -16,8 +15,11 @@ logger = logging.getLogger(__name__)
 room_id = sys.argv[1]
 logger.info("Room id = %s", room_id)
 
+server_host = sys.argv[2]
+logger.info("Server host = %s", server_host)
+
 req = urllib.request.Request(
-    f"{SERVER_URL_BASE}/rooms/{room_id}/register",
+    f"http://{server_host}/rooms/{room_id}/register",
     method="POST",
     headers={"Content-Type": "application/json"},
 )
@@ -26,7 +28,7 @@ with urllib.request.urlopen(req) as res:
 
 
 while True:
-    req = urllib.request.Request(f"{SERVER_URL_BASE}/rooms/{room_id}/poll")
+    req = urllib.request.Request(f"http://{server_host}/rooms/{room_id}/poll")
     with urllib.request.urlopen(req) as res:
         res_body = res.read().decode("utf-8")
         room = json.loads(res_body)

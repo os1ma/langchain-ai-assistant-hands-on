@@ -23,7 +23,7 @@ def create_agent_chain():
 
     tools = [
         # ToggleStreamlitLightTool(),
-        ToogleRemoteLightTool(room_id="myroom"),
+        ToogleRemoteLightTool(host="localhost", room_id="myroom"),
     ]
 
     return initialize_agent(
