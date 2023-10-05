@@ -7,7 +7,11 @@ from langchain.memory import ConversationBufferMemory
 from langchain.prompts import MessagesPlaceholder
 from PIL import Image
 
-from customtools import ToggleStreamlitLightTool, ToogleRemoteLightTool
+from customtools import (
+    ToggleStreamlitFanTool,
+    ToggleStreamlitLightTool,
+    ToogleRemoteLightTool,
+)
 
 load_dotenv()
 
@@ -22,8 +26,9 @@ def create_agent_chain():
     memory = ConversationBufferMemory(memory_key="memory", return_messages=True)
 
     tools = [
-        # ToggleStreamlitLightTool(),
-        ToogleRemoteLightTool(host="localhost", room_id="myroom"),
+        ToggleStreamlitLightTool(),
+        ToggleStreamlitFanTool(),
+        # ToogleRemoteLightTool(host="localhost", room_id="myroom"),
     ]
 
     return initialize_agent(
@@ -38,6 +43,9 @@ def create_agent_chain():
 # Streamlitのセッションに保存されるデータ
 if "is_light_on" not in st.session_state:
     st.session_state.is_light_on = False
+
+if "is_fan_on" not in st.session_state:
+    st.session_state.is_fan_on = False
 
 if "agent_chain" not in st.session_state:
     st.session_state.agent_chain = create_agent_chain()
@@ -73,8 +81,13 @@ if prompt:
 # サイドバーに画像を表示
 with st.sidebar:
     if st.session_state.is_light_on:
-        image = "light-room.jpeg"
+        light_on_off = "on"
     else:
-        image = "dark-room.jpeg"
+        light_on_off = "off"
 
-    st.image(Image.open(f"assets/{image}"))
+    if st.session_state.is_fan_on:
+        fan_on_off = "on"
+    else:
+        fan_on_off = "off"
+
+    st.image(Image.open(f"assets/light-{light_on_off}-fan-{fan_on_off}.png"))

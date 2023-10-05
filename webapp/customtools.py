@@ -34,3 +34,17 @@ class ToogleRemoteLightTool(BaseTool):
         req_body = {"is_light_on": on}
         res = requests.post(url, json=req_body)
         return res.text
+
+
+class ToggleFanInput(BaseModel):
+    on: bool = Field(description="Whether to turn the fan on or off")
+
+
+class ToggleStreamlitFanTool(BaseTool):
+    name = "toggle-fan"
+    description = "toggle the fan on or off"
+    args_schema: Type[BaseModel] = ToggleFanInput
+
+    def _run(self, on):
+        st.session_state.is_fan_on = on
+        return json.dumps({"is_fan_on": on})
