@@ -1,10 +1,11 @@
 import streamlit as st
-from dotenv import load_dotenv
-from langchain.agents import AgentType, initialize_agent
+from langchain.agents import AgentType, initialize_agent, load_tools
+from langchain.agents.agent_toolkits import ZapierToolkit
 from langchain.callbacks import StreamlitCallbackHandler
 from langchain.chat_models import ChatOpenAI
-from langchain.memory import ConversationBufferMemory
+from langchain.memory import ChatMessageHistory, ConversationBufferMemory
 from langchain.prompts import MessagesPlaceholder
+from langchain.utilities.zapier import ZapierNLAWrapper
 from PIL import Image
 
 from customtools import (
@@ -13,57 +14,85 @@ from customtools import (
     ToogleRemoteLightTool,
 )
 
-load_dotenv()
+
+# エージェントが使用するツールを準備する関数
+def setup_tools():
+    tools = []
+
+    # Step2：StreamlitでLangChainのAgentsにふれよう（今日の天気を教えて）
+    # web_search_tools = load_tools(["ddg-search"])
+    # tools.extend(web_search_tools)
+
+    # Step3：Zapier NLAでいろんなことをさせてみよう（明日の13時に会議の予定を登録して）
+    # zapier_toolkit = ZapierToolkit.from_zapier_nla_wrapper(ZapierNLAWrapper())
+    # tools.extend(zapier_toolkit.get_tools())
+
+    # Step4：Streamlit上の部屋の電気・扇風機（の画像）を操作させよう
+    streamlit_room_tools = [ToggleStreamlitLightTool(), ToggleStreamlitFanTool()]
+    tools.extend(streamlit_room_tools)
+
+    # Step5：ネットワークの向こうの電気を操作させよう
+    # remote_room_tools = [ToogleRemoteLightTool(host="localhost", room_id="myroom")]
+    # tools.extend(remote_room_tools)
+
+    return tools
 
 
 # エージェントを作成する関数
-def create_agent_chain():
-    chat = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, streaming=True)
+def create_agent(messages):
+    # LLMの準備
+    openai_api_key = st.session_state.openai_api_key
+    chat = ChatOpenAI(
+        openai_api_key=openai_api_key,
+        model_name="gpt-3.5-turbo",
+        temperature=0,
+        streaming=True,
+    )
 
-    agent_kwargs = {
-        "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
-    }
-    memory = ConversationBufferMemory(memory_key="memory", return_messages=True)
+    # 会話履歴を使う準備
+    history = ChatMessageHistory()
+    for message in messages:
+        if message["role"] == "user":
+            history.add_user_message(message["content"])
+        else:
+            history.add_ai_message(message["content"])
 
-    tools = [
-        ToggleStreamlitLightTool(),
-        ToggleStreamlitFanTool(),
-        # ToogleRemoteLightTool(host="localhost", room_id="myroom"),
-    ]
+    memory = ConversationBufferMemory(
+        chat_memory=history, memory_key="memory", return_messages=True
+    )
 
+    # エージェントが使用するツールを準備
+    tools = setup_tools()
+
+    # エージェントを初期化
     return initialize_agent(
         tools,
         chat,
-        agent=AgentType.OPENAI_FUNCTIONS,
-        agent_kwargs=agent_kwargs,
         memory=memory,
+        agent=AgentType.OPENAI_FUNCTIONS,
+        agent_kwargs={
+            "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
+        },
     )
 
 
-# Streamlitのセッションに保存されるデータ
+# Streamlitのセッションに保存するデータ
 if "is_light_on" not in st.session_state:
     st.session_state.is_light_on = False
 
 if "is_fan_on" not in st.session_state:
     st.session_state.is_fan_on = False
 
-if "agent_chain" not in st.session_state:
-    st.session_state.agent_chain = create_agent_chain()
-
-agent_chain = st.session_state.agent_chain
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
 # タイトルを表示
 st.title("My AI Assistant")
 
 # チャット履歴を表示
-for message in agent_chain.memory.chat_memory.messages:
-    if message.type == "human":
-        role = "user"
-    else:
-        role = "assistant"
-
-    with st.chat_message(role):
-        st.markdown(message.content)
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
 # 入力を受け付け
 prompt = st.chat_input("What is up?")
@@ -73,13 +102,24 @@ if prompt:
     with st.chat_message("user"):
         st.markdown(prompt)
 
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
     with st.chat_message("assistant"):
+        agent_chain = create_agent(st.session_state.messages)
         callback = StreamlitCallbackHandler(st.container())
+
         response = agent_chain.run(prompt, callbacks=[callback])
         st.markdown(response)
 
-# サイドバーに画像を表示
+    st.session_state.messages.append({"role": "assistant", "content": response})
+
+# サイドバー
 with st.sidebar:
+    # APIキーの入力欄を表示
+    openai_api_key = st.text_input("OpenAI API キー", type="password")
+    st.session_state.openai_api_key = openai_api_key
+
+    # 画像を表示
     if st.session_state.is_light_on:
         light_on_off = "on"
     else:

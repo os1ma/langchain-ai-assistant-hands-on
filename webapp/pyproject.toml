@@ -9,7 +9,6 @@ readme = "README.md"
 python = "^3.10"
 streamlit = "^1.27.1"
 langchain = "^0.0.306"
-python-dotenv = "^1.0.0"
 openai = "^0.28.1"
 
 
