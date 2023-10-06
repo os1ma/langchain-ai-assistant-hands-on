@@ -6,7 +6,7 @@ authors = ["Yuki Oshima <39944763+os1ma@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 streamlit = "^1.27.1"
 langchain = "^0.0.306"
 python-dotenv = "^1.0.0"
