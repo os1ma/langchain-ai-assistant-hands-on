@@ -3,8 +3,16 @@ from typing import Type
 
 import requests
 import streamlit as st
-from langchain.tools import BaseTool, tool
+from langchain.tools import BaseTool
 from pydantic import BaseModel, Field
+
+
+class NoOpTool(BaseTool):
+    name = "noop"
+    description = "Don't call this tool"
+
+    def _run(self, query):
+        return "noop"
 
 
 class ToggleLightInput(BaseModel):
