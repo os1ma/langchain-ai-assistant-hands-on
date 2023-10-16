@@ -2,18 +2,21 @@ import os
 
 import streamlit as st
 from langchain.agents import AgentType, initialize_agent, load_tools
-from langchain.agents.agent_toolkits import ZapierToolkit
 from langchain.callbacks import StreamlitCallbackHandler
 from langchain.chat_models import ChatOpenAI
-from langchain.memory import ChatMessageHistory, ConversationBufferMemory
+from langchain.memory import (
+    ChatMessageHistory,
+    ConversationBufferMemory,
+    StreamlitChatMessageHistory,
+)
 from langchain.prompts import MessagesPlaceholder
-from langchain.utilities.zapier import ZapierNLAWrapper
 from PIL import Image
 
 from customtools import (
     NoOpTool,
-    get_remote_room_tools,
-    get_streamlit_image_tools,
+    load_remote_room_tools,
+    load_streamlit_image_tools,
+    load_zapier_tools_for_openai_functions_agent,
 )
 
 
@@ -30,15 +33,16 @@ def setup_tools():
     # tools.extend(wikipedia_tools)
 
     # Step3：Zapier NLAでいろんなことをさせてみよう（明日の13時に会議の予定を登録して）
-    # zapier_toolkit = ZapierToolkit.from_zapier_nla_wrapper(ZapierNLAWrapper())
-    # tools.extend(zapier_toolkit.get_tools())
+    # zapier_tools = load_zapier_tools_for_openai_functions_agent()
+    # tools.extend(zapier_tools)
 
     # Step4：Streamlit上の部屋の電気・扇風機（の画像）を操作させよう
-    # streamlit_image_tools = get_streamlit_image_tools()
+    # streamlit_image_tools = load_streamlit_image_tools()
     # tools.extend(streamlit_image_tools)
 
-    # Step5：ネットワークの向こうの電気を操作させよう
-    # remote_room_tools = get_remote_room_tools(host="localhost", room_id="myroom")
+    # Step5：ネットワークの向こうの電気・扇風機を操作させよう
+    # ※ Step5のツールはStep4のツールと同時に使えません。どちらかだけ有効化してください
+    # remote_room_tools = load_remote_room_tools(host="localhost", room_id="myroom")
     # tools.extend(remote_room_tools)
 
     return tools

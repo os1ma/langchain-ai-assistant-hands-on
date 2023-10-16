@@ -3,9 +3,13 @@ from typing import Type
 
 import requests
 import streamlit as st
+from langchain.agents.agent_toolkits import ZapierToolkit
 from langchain.tools import BaseTool
+from langchain.utilities.zapier import ZapierNLAWrapper
 from pydantic import BaseModel, Field
 from requests.auth import HTTPBasicAuth
+
+# Step1で使うツール
 
 
 class NoOpTool(BaseTool):
@@ -14,6 +18,25 @@ class NoOpTool(BaseTool):
 
     def _run(self, query):
         return "noop"
+
+
+# Step3で使うツール
+
+
+def load_zapier_tools_for_openai_functions_agent():
+    toolkit = ZapierToolkit.from_zapier_nla_wrapper(ZapierNLAWrapper())
+    tools = toolkit.get_tools()
+
+    # LangChainのZapier NLAのツールは、descriptionが長すぎるため、
+    # OpenAI Functions Agentではエラーになります。
+    # エラーを回避するため、descriptionをnameで上書きしています。
+    for tool in tools:
+        tool.description = tool.name
+
+    return tools
+
+
+# Step4で使うツール
 
 
 class ToggleLightInput(BaseModel):
@@ -44,11 +67,14 @@ class ToggleStreamlitImageFanTool(BaseTool):
         return json.dumps({"is_fan_on": on})
 
 
-def get_streamlit_image_tools() -> list[BaseTool]:
+def load_streamlit_image_tools() -> list[BaseTool]:
     return [
         ToggleStreamlitImageLightTool(),
         ToggleStreamlitImageFanTool(),
     ]
+
+
+# Step5で使うツール
 
 
 class ToogleRemoteLightTool(BaseTool):
@@ -87,7 +113,7 @@ class ToogleRemoteFanTool(BaseTool):
         return res.text
 
 
-def get_remote_room_tools(
+def load_remote_room_tools(
     host: str,
     room_id: str,
     basic_auth_username: str = "testuser",

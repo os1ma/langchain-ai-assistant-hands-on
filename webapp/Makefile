@@ -1,3 +1,3 @@
 .PHONY: dev
 dev:
-	poetry run streamlit run streamlit_app.py
+	poetry run streamlit run agent_app.py
