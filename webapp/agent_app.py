@@ -12,9 +12,8 @@ from PIL import Image
 
 from customtools import (
     NoOpTool,
-    ToggleStreamlitFanTool,
-    ToggleStreamlitLightTool,
-    ToogleRemoteLightTool,
+    get_remote_room_tools,
+    get_streamlit_image_tools,
 )
 
 
@@ -35,11 +34,11 @@ def setup_tools():
     # tools.extend(zapier_toolkit.get_tools())
 
     # Step4：Streamlit上の部屋の電気・扇風機（の画像）を操作させよう
-    # streamlit_room_tools = [ToggleStreamlitLightTool(), ToggleStreamlitFanTool()]
-    # tools.extend(streamlit_room_tools)
+    # streamlit_image_tools = get_streamlit_image_tools()
+    # tools.extend(streamlit_image_tools)
 
     # Step5：ネットワークの向こうの電気を操作させよう
-    # remote_room_tools = [ToogleRemoteLightTool(host="localhost", room_id="myroom")]
+    # remote_room_tools = get_remote_room_tools(host="localhost", room_id="myroom")
     # tools.extend(remote_room_tools)
 
     return tools
