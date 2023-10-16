@@ -116,8 +116,8 @@ class ToogleRemoteFanTool(BaseTool):
 def load_remote_room_tools(
     host: str,
     room_id: str,
-    basic_auth_username: str = "testuser",
-    basic_auth_password: str = "testpassword",
+    basic_auth_username: str,
+    basic_auth_password: str,
 ) -> list[BaseTool]:
     return [
         ToogleRemoteLightTool(

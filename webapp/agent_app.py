@@ -41,7 +41,12 @@ def setup_tools():
 
     # Step5：ネットワークの向こうの電気・扇風機を操作させよう
     # ※ Step5のツールはStep4のツールと同時に使えません。どちらかだけ有効化してください
-    # remote_room_tools = load_remote_room_tools(host="localhost", room_id="myroom")
+    # remote_room_tools = load_remote_room_tools(
+    #     host="localhost",
+    #     room_id="myroom",
+    #     basic_auth_username="testuser",
+    #     basic_auth_password="testpassword",
+    # )
     # tools.extend(remote_room_tools)
 
     return tools
