@@ -1,12 +1,22 @@
 # langchain-ai-assistant-hands-on
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/os1ma/langchain-ai-assistant-hands-on/blob/main/colab.ipynb)
+【書籍出版記念 vol2】LangChain で AI アシスタントを動かすハンズオン【オフライン開催】
+
+イベントページ: https://studyco.connpass.com/event/298456/
+
+## 前提
+
+Google Colab を使用するため、Google アカウントが必要です。
 
 ## ハンズオンの進め方
 
+### 準備
+
+[colab.ipynb](./colab.ipynb) をダウンロードして、Google Drive の適当なフォルダにアップロードしてください。
+
 ### Step0: Streamlit で Chat Completions API を呼び出してみよう
 
-1. Google Colab を開いて、simple_app.py の実行まで進めてください。
+1. Google Colab で colab.ipynb を開いて、simple_app.py の実行まで進めてください。
 2. 適当に会話をしてみましょう。
 
 ※ OpenAI の API キーは、アカウント登録したうえで [こちら](https://platform.openai.com/account/api-keys) から発行してください。
@@ -40,9 +50,9 @@
 1. agent_app.py を編集して、エージェントが Streamlit 上の部屋の電気・扇風機（の画像）を操作できるようにしてください。
 2. 電気・扇風機を操作させてみましょう。（例「電気つけて」「扇風機つけて」）
 
-### Step5：ネットワークの向こうの電気を操作させよう
+### Step5：ネットワークの向こうの電気・扇風機を操作させよう
 
 1. agent_app.py を編集して、エージェントがネットワークの向こうの電気を操作できるようにしてください。
-2. 電気を操作させてみましょう。（例「電気つけて」）
+2. 電気を操作させてみましょう。（例「電気つけて」「扇風機つけて」）
 
 ※ ツールに設定する IP アドレスとルーム ID は講師に確認してください。
