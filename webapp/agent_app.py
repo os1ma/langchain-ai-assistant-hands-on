@@ -5,7 +5,6 @@ from langchain.agents import AgentType, initialize_agent, load_tools
 from langchain.callbacks import StreamlitCallbackHandler
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import (
-    ChatMessageHistory,
     ConversationBufferMemory,
     StreamlitChatMessageHistory,
 )
@@ -49,18 +48,11 @@ def setup_tools():
 
 
 # エージェントを作成する関数
-def create_agent(messages):
+def create_agent(history: StreamlitChatMessageHistory):
     # LLMの準備
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, streaming=True)
 
     # 会話履歴を使う準備
-    history = ChatMessageHistory()
-    for message in messages:
-        if message["role"] == "user":
-            history.add_user_message(message["content"])
-        else:
-            history.add_ai_message(message["content"])
-
     memory = ConversationBufferMemory(
         chat_memory=history, memory_key="memory", return_messages=True
     )
@@ -87,35 +79,31 @@ if "is_light_on" not in st.session_state:
 if "is_fan_on" not in st.session_state:
     st.session_state.is_fan_on = False
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+# Streamlitのセッションに自動で会話履歴が保存されるよう準備
+history = StreamlitChatMessageHistory()
 
 # タイトルを表示
 st.title("My AI Assistant")
 
 # チャット履歴を表示
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.write(message["content"])
+for message in history.messages:
+    with st.chat_message(message.type):
+        st.write(message.content)
 
 # 入力を受け付け
 prompt = st.chat_input("What is up?")
 
 # 入力があった場合、エージェントを実行
 if prompt:
-    with st.chat_message("user"):
+    with st.chat_message("human"):
         st.write(prompt)
 
-    st.session_state.messages.append({"role": "user", "content": prompt})
-
-    with st.chat_message("assistant"):
-        agent_chain = create_agent(st.session_state.messages)
+    with st.chat_message("ai"):
+        agent_chain = create_agent(history)
         callback = StreamlitCallbackHandler(st.container())
 
         response = agent_chain.run(prompt, callbacks=[callback])
         st.write(response)
-
-    st.session_state.messages.append({"role": "assistant", "content": response})
 
 # サイドバー
 with st.sidebar:
