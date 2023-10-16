@@ -7,7 +7,7 @@ set -o xtrace
 
 ROOM_ID="testroom"
 SERVER_HOST="localhost"
-SERVER_PORT="8000"
+SERVER_PORT="80"
 
 # GET /
 curl -f http://${SERVER_HOST}:${SERVER_PORT}
