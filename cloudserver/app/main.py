@@ -1,11 +1,15 @@
+import os
 import secrets
 from typing import Annotated, Optional
 
+from dotenv import load_dotenv
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pydantic import BaseModel
 
 from app.room import Room, RoomDatabase
+
+load_dotenv()
 
 room_database = RoomDatabase()
 
@@ -18,16 +22,18 @@ async def root():
 
 
 security = HTTPBasic()
+basic_auth_username = os.environ["BASIC_AUTH_USERNAME"]
+basic_auth_password = os.environ["BASIC_AUTH_PASSWORD"]
 
 
 def basic_auth(credentials: Annotated[HTTPBasicCredentials, Depends(security)]):
     current_username_bytes = credentials.username.encode("utf8")
-    correct_username_bytes = b"testuser"
+    correct_username_bytes = basic_auth_username.encode("utf8")
     is_correct_username = secrets.compare_digest(
         current_username_bytes, correct_username_bytes
     )
     current_password_bytes = credentials.password.encode("utf8")
-    correct_password_bytes = b"testpassword"
+    correct_password_bytes = basic_auth_password.encode("utf8")
     is_correct_password = secrets.compare_digest(
         current_password_bytes, correct_password_bytes
     )
