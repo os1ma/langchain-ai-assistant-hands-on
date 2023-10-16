@@ -33,5 +33,5 @@ sudo docker compose logs -f
 ### 6. 動作確認用コマンド実行
 
 ```console
-./test.sh
+BASIC_AUTH_USER=testuser BASIC_AUTH_PASSWORD=testpassword ./test.sh
 ```
