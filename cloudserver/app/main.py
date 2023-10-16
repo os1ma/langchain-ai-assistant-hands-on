@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
@@ -32,7 +34,8 @@ async def create_room(room_id: str) -> Room:
 
 
 class UpdateRoomRequestBody(BaseModel):
-    is_light_on: bool
+    is_light_on: Optional[bool] = None
+    is_fan_on: Optional[bool] = None
 
 
 @app.post("/rooms/{room_id}/update")
@@ -40,7 +43,7 @@ async def update_room(room_id: str, body: UpdateRoomRequestBody) -> Room:
     if not room_database.exist_room_id(room_id):
         raise HTTPException(status_code=404, detail="Room not found")
 
-    return room_database.turn_light(room_id, body.is_light_on)
+    return room_database.update_room(room_id, body.is_light_on, body.is_fan_on)
 
 
 @app.get("/rooms/{room_id}/poll")

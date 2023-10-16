@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -12,11 +13,12 @@ logger = logging.getLogger(__name__)
 class Room(BaseModel):
     id: str
     is_light_on: bool
+    is_fan_on: bool
 
 
 class RoomEventPair:
     def __init__(self, room_id: str) -> None:
-        self.room = Room(id=room_id, is_light_on=False)
+        self.room = Room(id=room_id, is_light_on=False, is_fan_on=False)
         self.event = asyncio.Event()
 
 
@@ -43,15 +45,22 @@ class RoomDatabase:
         self.roomEventPairs[room_id] = roomService
         return roomService.room
 
-    def turn_light(self, room_id: str, on: bool) -> Room:
+    def update_room(
+        self, room_id: str, is_light_on: Optional[bool], is_fan_on: Optional[bool]
+    ) -> Room:
         roomEventPair = self.roomEventPairs[room_id]
 
         room = roomEventPair.room
-        room.is_light_on = on
+        if is_light_on is not None:
+            room.is_light_on = is_light_on
+        if is_fan_on is not None:
+            room.is_fan_on = is_fan_on
+
         logger.info(
-            "Room updated. id = %s,  is_light_on = %s",
+            "Room updated. id = %s, is_light_on = %s, is_fan_on = %s",
             room.id,
             room.is_light_on,
+            room.is_fan_on,
         )
 
         event = roomEventPair.event
