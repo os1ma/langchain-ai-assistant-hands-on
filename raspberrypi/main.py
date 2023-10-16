@@ -1,46 +1,83 @@
-import json
-import logging
-import sys
-import urllib.request
+import time
 
-import RPi.GPIO as GPIO
+import network
+import urequests
+from machine import Pin
 
-GPIO_PIN = 4
+from env import config
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
+wlan_ssid = config["wlan_ssid"]
+wlan_pass = config["wlan_pass"]
+server_host = config["server_host"]
+room_id = config["room_id"]
 
-server_host = sys.argv[1]
-logger.info("Server host = %s", server_host)
+LIGHT_PIN_NO = 18
+FAN_PIN_NO = 16
 
-room_id = sys.argv[2]
-logger.info("Room id = %s", room_id)
-
-req = urllib.request.Request(
-    f"http://{server_host}/rooms/{room_id}/register",
-    method="POST",
-    headers={"Content-Type": "application/json"},
-)
-with urllib.request.urlopen(req) as res:
-    logger.info("Room registered. id = %s", room_id)
+led = Pin("LED", Pin.OUT)
+light = Pin(LIGHT_PIN_NO, Pin.OUT)
+fan = Pin(FAN_PIN_NO, Pin.OUT)
 
 
-while True:
-    req = urllib.request.Request(f"http://{server_host}/rooms/{room_id}/poll")
-    with urllib.request.urlopen(req) as res:
-        res_body = res.read().decode("utf-8")
-        room = json.loads(res_body)
-        logger.info(
-            "Room detail received. room.id = %s, room.is_light_on = %s",
-            room["id"],
-            room["is_light_on"],
-        )
+def connect_wifi():
+    wlan = network.WLAN(network.STA_IF)
 
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(GPIO_PIN, GPIO.OUT)
-        if room["is_light_on"]:
-            GPIO.output(GPIO_PIN, GPIO.HIGH)
+    wlan.active(True)
+    wlan.connect(wlan_ssid, wlan_pass)
+
+    while not wlan.isconnected():
+        print("WiFi connecting...")
+        time.sleep(1)
+
+    ip = wlan.ifconfig()[0]
+    print(f"WiFi connected. IP = {ip}")
+
+
+def initial_blink():
+    for _ in range(3):
+        led.on()
+        time.sleep(0.5)
+        led.off()
+        time.sleep(0.5)
+
+
+def main():
+    # 起動したことが分かるよう、LEDを最初に数回点滅
+    initial_blink()
+
+    # WiFiに接続
+    connect_wifi()
+
+    # WiFiに接続完了したら、LEDを点灯ß
+    led.on()
+
+    # サーバに部屋を登録
+    req = urequests.post(
+        f"http://{server_host}/rooms/{room_id}/register",
+        headers={"Content-Type": "application/json"},
+    )
+    room = req.json()
+    print(f"Room registered. id = {room_id}")
+
+    # 部屋の状態をポーリング
+    while True:
+        req = urequests.get(f"http://{server_host}/rooms/{room_id}/poll")
+        room = req.json()
+        is_light_on = room["is_light_on"]
+        is_fan_on = room["is_fan_on"]
+        print("Room detail received.")
+        print(f"  room.is_light_on = {is_light_on}")
+        print(f"  room.is_fan_on = {is_fan_on}")
+
+        if is_light_on:
+            led.on()
         else:
-            GPIO.output(GPIO_PIN, GPIO.LOW)
+            led.off()
+
+        if is_fan_on:
+            fan.on()
+        else:
+            fan.off()
+
+
+main()
