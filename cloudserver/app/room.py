@@ -4,10 +4,8 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
+# logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("uvicorn")
 
 
 class Room(BaseModel):
@@ -43,6 +41,9 @@ class RoomDatabase:
         roomService = RoomEventPair(room_id=room_id)
         # すでに存在する場合は上書きします
         self.roomEventPairs[room_id] = roomService
+
+        logger.info("Room registered. id = %s", room_id)
+
         return roomService.room
 
     def update_room(
