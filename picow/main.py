@@ -48,7 +48,7 @@ def main():
     # WiFiに接続
     connect_wifi()
 
-    # WiFiに接続完了したら、LEDを点灯ß
+    # WiFiに接続完了したら、LEDを点灯
     led.on()
 
     # サーバに部屋を登録
