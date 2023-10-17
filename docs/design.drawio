@@ -1,0 +1,89 @@
+<mxfile host="65bd71144e">
+    <diagram id="ypeufuI1j4cWYE-J5mNb" name="Page-1">
+        <mxGraphModel dx="977" dy="483" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="35" value="Agentのツール" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=none;dashed=1;" vertex="1" parent="1">
+                    <mxGeometry x="480" y="80" width="400" height="320" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="195" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="" style="endArrow=none;endFill=0;endSize=24;html=1;startArrow=classic;startFill=1;" parent="1" source="15" target="2" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="230" y="225" as="sourcePoint"/>
+                        <mxPoint x="360" y="225" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="9" value="「扇風機つけて」などの&lt;br&gt;キーボード入力" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="80" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="" style="endArrow=none;dashed=1;html=1;" parent="1" source="2" target="9" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="390" y="310" as="sourcePoint"/>
+                        <mxPoint x="440" y="260" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="13" value="OpenAI API" style="html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="325" y="80" width="110" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="Zapier NLA" style="html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="525" y="200" width="110" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="AIアシスタント&lt;br&gt;Webアプリ&lt;br&gt;(LangChain)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="185" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="&lt;span style=&quot;&quot;&gt;クラウドサーバ&lt;br&gt;（電気・扇風機の&lt;br&gt;状態管理）&lt;br&gt;&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="280" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="&lt;span style=&quot;&quot;&gt;Raspberry Pi&lt;br&gt;Pico W&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="720" y="280" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="Google&lt;br&gt;カレンダー&lt;br&gt;など" style="html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="725" y="200" width="110" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="Wikipedia" style="html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="525" y="120" width="110" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="" style="endArrow=none;endFill=0;endSize=24;html=1;startArrow=classic;startFill=1;" parent="1" source="13" target="15" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="330" y="235" as="sourcePoint"/>
+                        <mxPoint x="240" y="235" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="30" value="" style="endArrow=none;endFill=0;endSize=24;html=1;startArrow=classic;startFill=1;" parent="1" source="23" target="15" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="390" y="140" as="sourcePoint"/>
+                        <mxPoint x="390" y="195" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="31" value="" style="endArrow=none;endFill=0;endSize=24;html=1;startArrow=classic;startFill=1;" parent="1" source="14" target="15" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="570" y="173.7234042553191" as="sourcePoint"/>
+                        <mxPoint x="443.43631589446545" y="216.80891373805434" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="32" value="" style="endArrow=none;endFill=0;endSize=24;html=1;startArrow=classic;startFill=1;" parent="1" source="20" target="14" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="530" y="235" as="sourcePoint"/>
+                        <mxPoint x="410" y="235" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="33" value="" style="endArrow=none;endFill=0;endSize=24;html=1;startArrow=classic;startFill=1;" parent="1" source="16" target="15" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="730" y="235" as="sourcePoint"/>
+                        <mxPoint x="680" y="235" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="34" value="ロング&lt;br&gt;ポーリング" style="endArrow=none;endFill=0;endSize=24;html=1;startArrow=classic;startFill=1;" parent="1" source="16" target="17" edge="1">
+                    <mxGeometry y="-20" width="160" relative="1" as="geometry">
+                        <mxPoint x="538.3334692507426" y="309.6631740667816" as="sourcePoint"/>
+                        <mxPoint x="401.5912846304441" y="255.42155016621746" as="targetPoint"/>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
