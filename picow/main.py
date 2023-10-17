@@ -10,6 +10,8 @@ wlan_ssid = config["wlan_ssid"]
 wlan_pass = config["wlan_pass"]
 server_host = config["server_host"]
 room_id = config["room_id"]
+basic_auth_username = config["basic_auth_username"]
+basic_auth_password = config["basic_auth_password"]
 
 LIGHT_PIN_NO = 18
 FAN_PIN_NO = 16
@@ -43,6 +45,7 @@ def initial_blink():
 
 def main():
     # 起動したことが分かるよう、LEDを最初に数回点滅
+    print("Initializing...")
     initial_blink()
 
     # WiFiに接続
@@ -52,27 +55,35 @@ def main():
     led.on()
 
     # サーバに部屋を登録
-    req = urequests.post(
+    print(f"Room registering... server_host = {server_host}, room_id = {room_id}")
+    response = urequests.post(
         f"http://{server_host}/rooms/{room_id}/register",
-        headers={"Content-Type": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+        },
+        auth=(basic_auth_username, basic_auth_password),
     )
-    room = req.json()
-    print(f"Room registered. id = {room_id}")
+
+    room = response.json()
+    print(f"Room registered. room_id = {room_id}")
 
     # 部屋の状態をポーリング
     while True:
-        req = urequests.get(f"http://{server_host}/rooms/{room_id}/poll")
-        room = req.json()
+        print(f"Room polling... room_id = {room_id}")
+        response = urequests.get(
+            f"http://{server_host}/rooms/{room_id}/poll",
+            auth=(basic_auth_username, basic_auth_password),
+        )
+
+        room = response.json()
         is_light_on = room["is_light_on"]
         is_fan_on = room["is_fan_on"]
-        print("Room detail received.")
-        print(f"  room.is_light_on = {is_light_on}")
-        print(f"  room.is_fan_on = {is_fan_on}")
+        print(f"Room received. is_light_on = {is_light_on}, is_fan_on = {is_fan_on}")
 
         if is_light_on:
-            led.on()
+            light.on()
         else:
-            led.off()
+            light.off()
 
         if is_fan_on:
             fan.on()
