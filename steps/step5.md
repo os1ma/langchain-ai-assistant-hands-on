@@ -40,6 +40,9 @@
 ツールに設定する `host`、`room_id`、`basic_auth_username`、`basic_auth_password` の値は講師に確認してください。
 
 > **Warning**
+> このとき、Step4 で有効化したツールはコメントアウトして無効化してください。
+
+> **Warning**
 > agent_app.py の編集後、ファイルの保存を忘れないように注意してください。
 
 ### 2. Web アプリを読み込み直してください。
