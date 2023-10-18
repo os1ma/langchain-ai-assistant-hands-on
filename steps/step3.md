@@ -67,7 +67,7 @@ Zapier NLA に「Google カレンダーに予定を登録する」というア�
 
 > **Warning**
 > 「Require preview before running AI Action」のチェックを外すのを忘れないように注意してください。
-> チェックを外さないと、AI アシスタントが「Google カレンダーに予定を登録しよう」としたときに、Zapier 上でアクションの承認が必要になります
+> チェックを外さないと、AI アシスタントが「Google カレンダーに予定を登録しよう」としたときに、Zapier 上でアクションの承認が必要になり、AI アシスタントがうまく動作しません。
 
 ### 6. アクションが有効になったことを確認します。
 
@@ -108,4 +108,14 @@ Streamlit の画面右上に表示される「Rerun」をクリックするか�
 
 ### 9. Google カレンダーへの登録を依頼してみましょう。
 
-例えば「明日の 13 時に会議の予定を登録して」と依頼してみてください。
+OpenAI API キーと Zapier NLA API キーを貼り付けたうえで、例えば「明日の 13 時に会議の予定を登録して」と依頼してみてください。
+
+## 想定されるエラーについて
+
+### 「Require preview before running AI Action」のチェックを外し忘れた場合
+
+Zapier NLA のログ画面から、Zapier NLA が呼び出されたか確認することができます。
+
+Zapier NLA のログ画面: https://nla.zapier.com/logs/
+
+例えば Zapier NLA のアクションに「承認が必要」と設定している場合（「Require preview before running AI Action」のチェックを外し忘れた場合）、このログ画面で承認することができます。
