@@ -15,7 +15,7 @@ cd langchain-ai-assistant-hands-on/picow
 code .
 ```
 
-### 3. VSCode に MicroPiCo プラグインをインストール
+### 3. VSCode に MicroPico プラグインをインストール
 
 ### 4. `env.py` ファイル作成
 
@@ -23,17 +23,17 @@ code .
 
 ### 5. Pico W に接続
 
-Ctrl + Shift + P でコマンドパレットを開き、`MicroPiCo: Connect` を選択します。
+Ctrl + Shift + P でコマンドパレットを開き、`MicroPico: Connect` を選択します。
 
 ### 5. Pico W にプロジェクトをアップロード
 
-Ctrl + Shift + P でコマンドパレットを開き、`MicroPiCo: Delete all files from board` を選択します。
+Ctrl + Shift + P でコマンドパレットを開き、`MicroPico: Delete all files from board` を選択します。
 
-Ctrl + Shift + P でコマンドパレットを開き、`MicroPiCo: Upload project to Pico` を選択します。
+Ctrl + Shift + P でコマンドパレットを開き、`MicroPico: Upload project to Pico` を選択します。
 
 ### 6. 起動
 
-Ctrl + Shift + P でコマンドパレットを開き、`MicroPiCo: Reset > Soft (listen)` を選択します。
+Ctrl + Shift + P でコマンドパレットを開き、`MicroPico: Reset > Soft (listen)` を選択します。
 
 main.py の実行が始まると、LED が最初に数回点滅します。
 
