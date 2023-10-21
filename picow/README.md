@@ -2,17 +2,38 @@
 
 ## 環境構築手順
 
-### 1. `env.py` ファイル作成
+### 1. ソースコードを取得
+
+```console
+git clone https://github.com/os1ma/langchain-ai-assistant-hands-on.git
+```
+
+### 2. picow ディレクトリを VSCode で開く
+
+```console
+cd langchain-ai-assistant-hands-on/picow
+code .
+```
+
+### 3. VSCode に MicroPiCo プラグインをインストール
+
+### 4. `env.py` ファイル作成
 
 `env.py.template` ファイルをコピーして `env.py` ファイルを作成し、内容を編集します。
 
-### 2. アップロード
+### 5. Pico W に接続
 
-Pico W にプロジェクトをアップロードします。
+Ctrl + Shift + P でコマンドパレットを開き、`MicroPiCo: Connect` を選択します。
 
-### 3. 起動
+### 5. Pico W にプロジェクトをアップロード
 
-再起動すると、main.py の実行が開始します。
+Ctrl + Shift + P でコマンドパレットを開き、`MicroPiCo: Delete all files from board` を選択します。
+
+Ctrl + Shift + P でコマンドパレットを開き、`MicroPiCo: Upload project to Pico` を選択します。
+
+### 6. 起動
+
+Ctrl + Shift + P でコマンドパレットを開き、`MicroPiCo: Reset > Soft (listen)` を選択します。
 
 main.py の実行が始まると、LED が最初に数回点滅します。
 
