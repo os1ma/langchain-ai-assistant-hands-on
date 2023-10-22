@@ -5,7 +5,7 @@ set -o nounset
 set -o pipefail
 set -o xtrace
 
-readonly ROOM_ID="myroom"
+readonly ROOM_ID="${ROOM_ID:-myroom}"
 readonly SERVER_HOST=${SERVER_HOST:-localhost}
 readonly SERVER_PORT=${SERVER_PORT:-80}
 readonly BASIC_AUTH_USERNAME=${BASIC_AUTH_USERNAME:-testuser}
