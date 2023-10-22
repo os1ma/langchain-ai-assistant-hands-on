@@ -29,6 +29,9 @@ cd langchain-ai-assistant-hands-on/picow
 code .
 ```
 
+> **Warning**
+> langchain-ai-assistant-hands-on ディレクトリを開くとうまくいかない可能性があります。
+
 ### 3. VSCode に MicroPico プラグインをインストール
 
 ### 4. `env.py` ファイル作成
