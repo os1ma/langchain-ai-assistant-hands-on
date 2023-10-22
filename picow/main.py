@@ -1,3 +1,4 @@
+import _thread
 import time
 
 import network
@@ -13,12 +14,15 @@ room_id = config["room_id"]
 basic_auth_username = config["basic_auth_username"]
 basic_auth_password = config["basic_auth_password"]
 
-LIGHT_PIN_NO = 18
-FAN_PIN_NO = 16
+LIGHT_1_PIN_NO = 15
+LIGHT_2_PIN_NO = 16
+LIGHT_BLINK_INTERVAL_SEC = 0.5
 
 led = Pin("LED", Pin.OUT)
-light = Pin(LIGHT_PIN_NO, Pin.OUT)
-fan = Pin(FAN_PIN_NO, Pin.OUT)
+light1 = Pin(LIGHT_1_PIN_NO, Pin.OUT)
+light2 = Pin(LIGHT_2_PIN_NO, Pin.OUT)
+
+is_light_on = False
 
 
 def connect_wifi():
@@ -35,7 +39,7 @@ def connect_wifi():
     print(f"WiFi connected. IP = {ip}")
 
 
-def initial_blink():
+def initial_led_blink():
     for _ in range(3):
         led.on()
         time.sleep(0.5)
@@ -43,10 +47,25 @@ def initial_blink():
         time.sleep(0.5)
 
 
+def blink_lights_thread():
+    while True:
+        if is_light_on:
+            light1.on()
+            light2.off()
+            time.sleep(LIGHT_BLINK_INTERVAL_SEC)
+            light1.off()
+            light2.on()
+            time.sleep(LIGHT_BLINK_INTERVAL_SEC)
+        else:
+            light1.off()
+            light2.off()
+            time.sleep(LIGHT_BLINK_INTERVAL_SEC)
+
+
 def main():
     # 起動したことが分かるよう、LEDを最初に数回点滅
     print("Initializing...")
-    initial_blink()
+    initial_led_blink()
 
     # WiFiに接続
     connect_wifi()
@@ -54,17 +73,18 @@ def main():
     # WiFiに接続完了したら、LEDを点灯
     led.on()
 
+    # ライトの点灯・消灯のスレッドを開始
+    _thread.start_new_thread(blink_lights_thread, ())
+
     # サーバに部屋を登録
     print(f"Room registering... server_host = {server_host}, room_id = {room_id}")
-    response = urequests.post(
+    urequests.post(
         f"http://{server_host}/rooms/{room_id}/register",
         headers={
             "Content-Type": "application/json",
         },
         auth=(basic_auth_username, basic_auth_password),
     )
-
-    room = response.json()
     print(f"Room registered. room_id = {room_id}")
 
     # 部屋の状態をポーリング
@@ -76,19 +96,11 @@ def main():
         )
 
         room = response.json()
+
+        global is_light_on
         is_light_on = room["is_light_on"]
-        is_fan_on = room["is_fan_on"]
-        print(f"Room received. is_light_on = {is_light_on}, is_fan_on = {is_fan_on}")
-
-        if is_light_on:
-            light.on()
-        else:
-            light.off()
-
-        if is_fan_on:
-            fan.on()
-        else:
-            fan.off()
+        print(f"Room received. is_light_on = {is_light_on}")
 
 
-main()
+if __name__ == "__main__":
+    main()
