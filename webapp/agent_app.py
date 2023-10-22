@@ -13,7 +13,7 @@ from PIL import Image
 
 from customtools import (
     NoOpTool,
-    load_remote_room_tools,
+    ToogleRemoteLightTool,
     load_streamlit_image_tools,
     load_zapier_tools_for_openai_functions_agent,
 )
@@ -23,31 +23,30 @@ from customtools import (
 def setup_tools():
     tools = []
 
-    # Step1: AI エージェントを動かしてみよう
+    # Step2: AI エージェントを動かしてみよう
     # ツールが何もないとうまく動作しないため、何もしないツールを用意
     tools.append(NoOpTool())
 
-    # Step2: エージェントが Wikipedia を検索できるようにしてみよう（Stable Diffusionについて教えて）
+    # Step3: エージェントが Wikipedia を検索できるようにしてみよう（Stable Diffusionについて教えて）
     # wikipedia_tools = load_tools(["wikipedia"])
     # tools.extend(wikipedia_tools)
 
-    # Step3: Zapier NLA で Google カレンダーに予定を登録させてみよう（明日の13時に会議の予定を登録して）
+    # Step4: Zapier NLA で Google カレンダーに予定を登録させてみよう（明日の13時に会議の予定を登録して）
     # zapier_tools = load_zapier_tools_for_openai_functions_agent()
     # tools.extend(zapier_tools)
 
-    # Step4: Streamlit 上の部屋の電気・扇風機（の画像）を操作させよう
+    # Step5: Streamlit 上の部屋の電気・扇風機（の画像）を操作させよう
     # streamlit_image_tools = load_streamlit_image_tools()
     # tools.extend(streamlit_image_tools)
 
-    # Step5: ネットワークの向こうの電気・扇風機を操作させよう
-    # ※ Step5のツールはStep4のツールと同時に使えません。どちらかだけ有効化してください
-    # remote_room_tools = load_remote_room_tools(
+    # 講師用
+    # remote_light_tool = ToogleRemoteLightTool(
     #     host="localhost",
     #     room_id="myroom",
     #     basic_auth_username="testuser",
     #     basic_auth_password="testpassword",
     # )
-    # tools.extend(remote_room_tools)
+    # tools.append(remote_light_tool)
 
     return tools
 

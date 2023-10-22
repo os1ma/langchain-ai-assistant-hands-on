@@ -20,7 +20,7 @@ class NoOpTool(BaseTool):
         return "noop"
 
 
-# Step3で使うツール
+# Step4で使うツール
 
 
 def load_zapier_tools_for_openai_functions_agent():
@@ -36,7 +36,7 @@ def load_zapier_tools_for_openai_functions_agent():
     return tools
 
 
-# Step4で使うツール
+# Step5で使うツール
 
 
 class ToggleLightInput(BaseModel):
@@ -93,43 +93,3 @@ class ToogleRemoteLightTool(BaseTool):
         req_body = {"is_light_on": on}
         res = requests.post(url, auth=auth, json=req_body)
         return res.text
-
-
-class ToogleRemoteFanTool(BaseTool):
-    name = "toggle-fan"
-    description = "toggle the fan on or off"
-    args_schema: Type[BaseModel] = ToggleFanInput
-
-    host: str
-    room_id: str
-    basic_auth_username: str
-    basic_auth_password: str
-
-    def _run(self, on):
-        url = f"http://{self.host}/rooms/{self.room_id}/update"
-        auth = HTTPBasicAuth(self.basic_auth_username, self.basic_auth_password)
-        req_body = {"is_fan_on": on}
-        res = requests.post(url, auth=auth, json=req_body)
-        return res.text
-
-
-def load_remote_room_tools(
-    host: str,
-    room_id: str,
-    basic_auth_username: str,
-    basic_auth_password: str,
-) -> list[BaseTool]:
-    return [
-        ToogleRemoteLightTool(
-            host=host,
-            room_id=room_id,
-            basic_auth_username=basic_auth_username,
-            basic_auth_password=basic_auth_password,
-        ),
-        ToogleRemoteFanTool(
-            host=host,
-            room_id=room_id,
-            basic_auth_username=basic_auth_username,
-            basic_auth_password=basic_auth_password,
-        ),
-    ]

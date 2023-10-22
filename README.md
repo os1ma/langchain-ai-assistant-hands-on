@@ -4,16 +4,12 @@
 
 イベントページ: https://studyco.connpass.com/event/298456/
 
-## 概要構成図
-
-![構成図](./docs/design.png)
-
 ## 前提条件
 
 Google Colab を使用するため、Google アカウントが必要です。
 
 ## ハンズオンの進め方
 
-このハンズオンは、Step0 〜 Step5 で構成されています。
+このハンズオンは、Step1 〜 Step5 で構成されています。
 
-[steps](./steps/) ディレクトリ以下の [step0.md](./steps/step0.md) 〜 [step5.md](./steps/step5.md) を順番に進めてください。
+[steps](./steps/) ディレクトリ以下の [step1.md](./steps/step0.md) 〜 [step5.md](./steps/step5.md) を順番に進めてください。
