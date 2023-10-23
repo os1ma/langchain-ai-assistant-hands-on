@@ -55,3 +55,28 @@ Streamlit の画面右上に表示される「Rerun」をクリックするか�
 > 大勢が同じ WiFi を使うといった環境では、このレートリミットに引っかからないよう、Wikipedia API の呼び出し回数に注意してください。
 >
 > 参考: https://api.wikimedia.org/wiki/Rate_limits
+
+## 想定されるエラーについて
+
+### ConnectionError
+
+Wikipedia への接続がうまくいかず、ConnectionError などが発生する場合があるかもしれません。
+
+その際は代替として、「terminal」というシェルでコマンドを実行するツールを試してみてください。
+
+```python
+    # wikipedia_tools = load_tools(["wikipedia"])
+    # tools.extend(wikipedia_tools)
+    terminal_tools = load_tools(["terminal"])
+    tools.extend(terminal_tools)
+```
+
+エージェントには以下のような入力を与えてみてください。
+
+- 「ファイルの一覧を表示して」
+- 「hello.txt というファイルを作成して」
+- 「hello.txt に自己紹介を書き込んで」
+
+> **Warning**
+> エージェントに「terminal」というツールを与えると、指示次第で `agent_app.py` などを削除される可能性があります。
+> `agent_app.py` などの削除を依頼しないように注意してください。
