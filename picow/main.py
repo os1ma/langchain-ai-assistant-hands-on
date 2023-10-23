@@ -39,12 +39,12 @@ def connect_wifi():
     print(f"WiFi connected. IP = {ip}")
 
 
-def initial_led_blink():
+def blink_led(interval_sec = 0.1):
     for _ in range(3):
         led.on()
-        time.sleep(0.5)
+        time.sleep(interval_sec)
         led.off()
-        time.sleep(0.5)
+        time.sleep(interval_sec)
 
 
 def blink_lights_thread():
@@ -65,7 +65,7 @@ def blink_lights_thread():
 def main():
     # 起動したことが分かるよう、LEDを最初に数回点滅
     print("Initializing...")
-    initial_led_blink()
+    blink_led(interval_sec=0.5)
 
     # WiFiに接続
     connect_wifi()
@@ -100,6 +100,8 @@ def main():
         global is_light_on
         is_light_on = room["is_light_on"]
         print(f"Room received. is_light_on = {is_light_on}")
+        blink_led()
+        led.on()
 
 
 if __name__ == "__main__":
